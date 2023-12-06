@@ -22,3 +22,11 @@ document.querySelector('#app').innerHTML = `
 `
 
 setupCounter(document.querySelector('#counter'))
+const URL = "https://enka.network/api";
+
+async function getData(URL){
+  const response = await fetch(URL);
+  console.log(response);
+}
+getData(URL)
+mode: 'no-cors'
