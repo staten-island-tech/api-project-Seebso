@@ -20,16 +20,25 @@ document.querySelector('#app').innerHTML = `
     </p>
   </div>
 `
-
+const DOMSelectors = {
+  input: document.querySelector('.inp'),
+};
 setupCounter(document.querySelector('#counter'))
-const URL = "https://enka.network/api/uid/648627899/";
 
-async function getData(URL){
+getData(184)
 
-  const response = await fetch(URL, {
-    mode:  'no-cors' ,
-  })
-  /* const response = await fetch(URL); */
-  console.log(response);
+async function getData(input){
+  let URL = `https://pokeapi.co/api/v2/pokemon/${input}`
+  console.log(URL)
+  try {
+    const response = await fetch(URL)
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
 }
-getData(URL)
+getData(URL);
+/* , {
+  mode:  'no-cors' ,
+}) */
