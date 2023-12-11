@@ -21,15 +21,19 @@ document.querySelector('#app').innerHTML = `
   </div>
 `
 const DOMSelectors = {
-  input: document.querySelector('.inp'),
+  input: document.querySelector('#inp'),
+  button: document.querySelector('.btn'),
 };
 setupCounter(document.querySelector('#counter'))
-
-getData(184)
-
+DOMSelectors.button.addEventListener("click", function () {
+  let input = DOMSelectors.input.value;
+  console.log(input)
+  getData(URL);
+})
 async function getData(input){
   let URL = `https://pokeapi.co/api/v2/pokemon/${input}`
   console.log(URL)
+  console.log(input)
   try {
     const response = await fetch(URL)
     const data = await response.json();
@@ -38,7 +42,11 @@ async function getData(input){
     console.log(error);
   }
 }
-getData(URL);
+DOMSelectors.button.addEventListener("click", function () {
+  let input = DOMSelectors.input.value;
+  console.log(input)
+  getData(URL);
+})
 /* , {
   mode:  'no-cors' ,
 }) */
