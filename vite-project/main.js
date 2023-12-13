@@ -1,5 +1,5 @@
 import './style.css'
-import javascriptLogo from './javascript.svg'
+/* import javascriptLogo from './javascript.svg'
 import viteLogo from '/vite.svg'
 import { setupCounter } from './counter.js'
 
@@ -19,35 +19,42 @@ document.querySelector('#app').innerHTML = `
       Click on the Vite logo to learn more
     </p>
   </div>
-`
+` */
 const DOMSelectors = {
-  inp: document.querySelector('#inp'),
+  inp: document.querySelector('.inp'),
   button: document.querySelector('#btn'),
+  name: document.querySelector('#name'),
+  id: document.querySelector('#id'),
+  error: document.querySelector('#error'),
 };
-setupCounter(document.querySelector('#counter'))
+function clearinfo(){
+  DOMSelectors.id.innerHTML = "";
+  DOMSelectors.name.innerHTML = "";
+  DOMSelectors.error.innerHTML = "";
+}
 DOMSelectors.button.addEventListener("click", function () {
-  let input = DOMSelectors.inp.value;
-  console.log(input)
-  getData(URL);
+  let pokemon = DOMSelectors.inp.value;
+  console.log(pokemon)
+  clearinfo()
+  getData(pokemon);
 })
-async function getData(input){
-  let URL = `https://pokeapi.co/api/v2/pokemon/gyarados`
-  console.log(URL)
-  console.log(input)
+async function getData(pokemon){
+  let URL = `https://pokeapi.co/api/v2/pokemon/${pokemon}`
   try {
     const response = await fetch(URL)
+    if (response.status == 404){
+      DOMSelectors.error.innerHTML = `Pokemon ${pokemon} not found. Are you sure you typed the right name?`
+      return;
+    }
     const data = await response.json();
     console.log(data);
+    DOMSelectors.name.innerHTML = data.name
+    DOMSelectors.id.innerHTML = data.id
   } catch (error) {
     console.log(error);
   }
 }
-DOMSelectors.button.addEventListener("click", function () {
-  let input = DOMSelectors.input.value;
-  console.log(input)
-  getData(URL);
-})
-getData(URL);
+getData("pichu");
 /* , {
   mode:  'no-cors' ,
 }) */
