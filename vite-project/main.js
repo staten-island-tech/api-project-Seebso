@@ -23,8 +23,8 @@ document.querySelector('#app').innerHTML = `
 const DOMSelectors = {
   inp: document.querySelector('.inp'),
   button: document.querySelector('#btn'),
-  name: document.querySelector('#name'),
-  id: document.querySelector('#id'),
+  name: document.querySelector('#nickname'),
+  id: document.querySelector('#level'),
   error: document.querySelector('#error'),
 };
 function clearinfo(){
@@ -43,24 +43,28 @@ DOMSelectors.button.addEventListener("click", function () {
   getData(pokemon);
 })
 async function getData(pokemon){
-  let URL = `https://pokeapi.co/api/v2/pokemon/${pokemon}`
+  /* let URL = `https://pokeapi.co/api/v2/pokemon/${pokemon}` */
+  let URL = `https://enka.network/api/uid/${pokemon}`
   DOMSelectors.error.innerHTML = "Fetching data..."
   try {
-    const response = await fetch(URL)
+    const response = await fetch(URL,{
+      mode:  'no-cors' ,
+    })
+    console.log(URL);
     if (response.status == 404){
-      DOMSelectors.error.innerHTML = `Pokemon ${pokemon} not found. Are you sure you typed the right name?`
+      DOMSelectors.error.innerHTML = `Pokemon "${pokemon}" not found. Are you sure you typed the right name/id?`
       return;
     }
     DOMSelectors.error.innerHTML = ""
-    const data = await response.json();
+    const data = await response.json()
     console.log(data);
-    DOMSelectors.name.innerHTML = data.name
-    DOMSelectors.id.innerHTML = data.id
+    DOMSelectors.name.innerHTML = data.nickname
+    DOMSelectors.id.innerHTML = data.level
   } catch (error) {
     console.log(error);
   }
 }
-getData("pichu");
+getData("648627899");
 /* , {
   mode:  'no-cors' ,
 }) */
