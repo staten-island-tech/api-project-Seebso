@@ -36,16 +36,22 @@ DOMSelectors.button.addEventListener("click", function () {
   let pokemon = DOMSelectors.inp.value;
   console.log(pokemon)
   clearinfo()
+  if (pokemon.trim() === ""){
+    DOMSelectors.error.innerHTML = "You didn't enter anything lol what am i supposed to do"
+    return;
+  }
   getData(pokemon);
 })
 async function getData(pokemon){
   let URL = `https://pokeapi.co/api/v2/pokemon/${pokemon}`
+  DOMSelectors.error.innerHTML = "Fetching data..."
   try {
     const response = await fetch(URL)
     if (response.status == 404){
       DOMSelectors.error.innerHTML = `Pokemon ${pokemon} not found. Are you sure you typed the right name?`
       return;
     }
+    DOMSelectors.error.innerHTML = ""
     const data = await response.json();
     console.log(data);
     DOMSelectors.name.innerHTML = data.name
