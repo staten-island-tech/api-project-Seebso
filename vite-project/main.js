@@ -26,6 +26,8 @@ const DOMSelectors = {
   name: document.querySelector('#name'),
   id: document.querySelector('#id'),
   error: document.querySelector('#error'),
+  card: document.getElementById("an"),
+  buto: document.querySelector('#container'),
 };
 function clearinfo(){
   DOMSelectors.id.innerHTML = "";
@@ -56,12 +58,22 @@ async function getData(pokemon){
     DOMSelectors.error.innerHTML = ""
     const data = await response.json()
     console.log(data);
-    DOMSelectors.name.innerHTML = data.name
-    DOMSelectors.id.innerHTML = data.id
+    DOMSelectors.card.insertAdjacentHTML("beforeend",`<div class="card"><h1> ${data.name}</h1><h2> ${data.id}</h2><button type="button"class="but">remove</button></div>`)
+    remove();
   } catch (error) {
     console.log(error);
   }
 }
+function remove() {
+  let buto = document.querySelectorAll(".but");
+  buto.forEach((but) => 
+      but.addEventListener("click",  (clic) => {
+          clic.currentTarget.parentNode.remove();
+          console.log("e")
+      })
+  );
+}
+
 getData("648627899");
 /* , {
   mode:  'no-cors' ,

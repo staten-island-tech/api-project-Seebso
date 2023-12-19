@@ -97,3 +97,25 @@ button:focus-visible {
 #error{
   color: red;
 }
+.card{
+  flex-wrap: wrap;
+  height: 40vh;
+  width: 30vh;
+  margin: 2.5rem 0.5rem;
+  background-color: #cb8edd;
+  align-items: center;
+  display: inline-flex;
+  flex-direction:column;
+  justify-content: space-between;
+}
+.container {
+  margin: 1rem auto;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #ffffff;
+  align-items: center;
+  justify-content: space-around;
+}
+#an {
+  width: 100%;
+}
