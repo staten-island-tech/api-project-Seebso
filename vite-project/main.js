@@ -23,7 +23,7 @@ document.querySelector('#app').innerHTML = `
 const DOMSelectors = {
   inp: document.querySelector('.inp'),
   button: document.querySelector('#btn'),
-  name: document.querySelector('#name'),
+  name: document.querySelector('#displayName'),
   id: document.querySelector('#id'),
   error: document.querySelector('#error'),
   card: document.getElementById("an"),
@@ -45,7 +45,7 @@ DOMSelectors.button.addEventListener("click", function () {
   getData(pokemon);
 })
 async function getData(pokemon){
-  let URL = `https://pokeapi.co/api/v2/pokemon/${pokemon}`
+  let URL = `https://valorant-api.com/v1/weapons/skins`
  /*  let URL = `https://enka.network/api/uid/${pokemon}` */
   DOMSelectors.error.innerHTML = "Fetching data..."
   try {
