@@ -35,32 +35,38 @@ function clearinfo(){
   DOMSelectors.error.innerHTML = "";
 }
 DOMSelectors.button.addEventListener("click", function () {
-  let pokemon = DOMSelectors.inp.value;
-  console.log(pokemon)
+  let title = DOMSelectors.inp.value;
+  console.log(title)
   clearinfo()
-  if (pokemon.trim() === ""){
+  if (title.trim() === ""){
     DOMSelectors.error.innerHTML = "You didn't enter anything lol what am i supposed to do"
     return;
   }
-  getData(pokemon);
+  let encodedTitle = title.replaceAll(" ", "+")
+  getData(encodedTitle);
 })
-async function getData(pokemon){
-  let URL = `https://valorant-api.com/v1/weapons/skins`
+async function getData(title){
+  let URL = `https://openlibrary.org/search.json?title=${title}`
  /*  let URL = `https://enka.network/api/uid/${pokemon}` */
   DOMSelectors.error.innerHTML = "Fetching data..."
   try {
     const response = await fetch(URL)
     console.log(URL);
     if (response.status == 404){
-      DOMSelectors.error.innerHTML = `Pokemon "${pokemon}" not found. Are you sure you typed the right name/id?`
+      DOMSelectors.error.innerHTML = `Book name "${title}" not found. Are you sure you typed the right book name?`
       return;
     }
     DOMSelectors.error.innerHTML = ""
     const data = await response.json()
     console.log(data);
-    const weight = data.weight/10;
-    const height = data.height/10
-    DOMSelectors.error.insertAdjacentHTML("afterend",`<div class="card"><h1 class="name"> ${data.name}</h1><div class="info"><h3 class="id"> <div>ID: ${data.id}</div><div>Height: ${height}m</div><div>Weight: ${weight}kg</div></h3><img width="150" src="${data.sprites.front_default}"/></div><button type="button"class="but">remove</button></div>`)
+    if (data.docs.length == 0){
+      DOMSelectors.error.innerHTML = `Book name "${title}" not found. Are you sure you typed the right book name?`
+      return;
+    }
+    let book = data.docs[0];
+    let authorarraystring = book["author_name"].toString();
+    let author = authorarraystring.length > 40 ? authorarraystring.substring(0,40) + "..." : authorarraystring;
+    DOMSelectors.error.insertAdjacentHTML("afterend",`<div class="card"><h2 class="name"> ${book.title}</h2><div class="info"><h3 class="id"> <div title="${authorarraystring}">Author: ${author}</div><div>Year Published: ${book.first_publish_year}</div><div>Pages: ${book.number_of_pages_median}</div></div><button type="button"class="but">remove</button></div>`)
     remove();
   } catch (error) {
     console.log(error);
