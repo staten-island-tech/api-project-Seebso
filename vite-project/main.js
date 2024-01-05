@@ -64,6 +64,9 @@ async function getData(title){
       return;
     }
     let book = data.docs[0];
+    if(book["author_name"] == undefined){
+      book["author_name"] = "Not Found"
+    }
     let authorarraystring = book["author_name"].toString();
     let author = authorarraystring.length > 40 ? authorarraystring.substring(0,40) + "..." : authorarraystring;
     DOMSelectors.error.insertAdjacentHTML("afterend",`<div class="card"><h2 class="name"> ${book.title}</h2><div class="info"><h3 class="id"> <div title="${authorarraystring}">Author: ${author}</div><div>Year Published: ${book.first_publish_year}</div><div>Pages: ${book.number_of_pages_median}</div></div><button type="button"class="but">remove</button></div>`)
