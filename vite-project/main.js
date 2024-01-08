@@ -84,7 +84,7 @@ function remove() {
       })
   );
 }
-
+getData("Harry");
 /* , {
   mode:  'no-cors' ,
 }) */
